@@ -4,33 +4,36 @@ import { normalizeCPaaSMessage, transformToCPaaSMessage } from "../../../infrast
 import { Configuration, IncomingMessage, NormalizedMessage } from "../../../infrastructure/types/types";
 import { Service } from "typedi";
 import { config } from "../../../config";
-import logger from '../../../middleware/logger';
+import BaseLogger from '../../../middleware/logger';
 
 @Service()
 export default class CPaaSConnector implements AbstractConnector {
 
     private configuration: Configuration;
     private apiClient: CPaaSAPIClient;
+    private logger;
     constructor(configuration?: Configuration) {
+        this.logger = BaseLogger.child({ meta: { service: 'cpaas-connector' } });
         this.configuration = configuration || config.cpaasConfig;
         this.apiClient = new CPaaSAPIClient(this.configuration);
     }
 
     public async sendMessage(message: NormalizedMessage): Promise<NormalizedMessage> {
-        logger.info(`Sending normalized message to CPaaS: ${JSON.stringify(message)}`);
+        this.logger.info(`Sending normalized message to CPaaS: `, message);
 
-        const cpaasMessage = transformToCPaaSMessage(message);     
-
-        logger.info(`Transformed normalized message to CPaaS Fromat: ${JSON.stringify(cpaasMessage)}`);
+        const cpaasMessage = transformToCPaaSMessage(message);
+        this.logger.info(`Transformed normalized message to CPaaS Fromat: `, cpaasMessage);
 
         const sentMessage = await this.apiClient.sendMessage(cpaasMessage);
-        console.log(sentMessage.data);
+        this.logger.info(`Send Message request sent to CPaaS and response data received: `, sentMessage.data);
+
         return message;
     };
-    
+
     public async messageCallbackHandler(incomingMessage: IncomingMessage, callback: Function): Promise<void> {
         const normalizedMessage = normalizeCPaaSMessage(incomingMessage);
-        logger.info(`Normalized incoming CPaaS message to: ${JSON.stringify(normalizedMessage)}`);
+        this.logger.info(`Normalized incoming CPaaS message to: `, normalizedMessage);
+
         return callback(normalizedMessage)
     };
 

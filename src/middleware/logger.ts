@@ -6,13 +6,12 @@ const logger = createLogger({
     defaultMeta: { service: process.env.APP_NAME || 'SMS-AXP-CONNECTOR' },
     transports: [
 
-    ],
-    exceptionHandlers: [new transports.File({ filename: 'logs/exceptions.log' })],
+    ]
 });
 
 if (process.env.LOG_TO_CONSOLE == "true") {
     logger.add(new transports.Console({
-        format: format.simple(),
+        format: format.combine(format.colorize(), format.simple())
     }))
 }
 

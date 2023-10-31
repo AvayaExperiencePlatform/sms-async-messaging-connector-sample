@@ -1,23 +1,22 @@
-# Common build stage
-FROM node:18-alpine3.18 as common-build-stage
 
-COPY . ./app
-
+FROM node:18-alpine as base
 WORKDIR /app
+RUN apk add --no-cache make
+RUN apk upgrade --available
+RUN apk add --no-cache --virtual .gyp python3 make g++
+RUN apk upgrade --available
+COPY . .
+ENV NODE_ENV=production
+RUN npm install --force
 
-RUN npm install
-
+FROM scratch as production-build
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=base lib/ /lib/
+COPY --from=base usr/ /usr/
+COPY --from=base app/ /app/
+COPY --from=base bin/ /bin/
 EXPOSE 3030
-
-# Dvelopment build stage
-# FROM common-build-stage as development-build-stage
-
-# ENV NODE_ENV development
-
-# CMD ["npm", "run", "dev"]
-
-# Production build stage
-FROM common-build-stage as production-build-stage
 
 ENV NODE_ENV production
 

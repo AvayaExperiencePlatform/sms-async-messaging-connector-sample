@@ -2,18 +2,31 @@ version: "3.7"
 
 services:
     server:
+        image: axp-sms-connector
         build:
             context: ./
-            target: development-build-stage
+            target: production-build
         ports:
-            - "${APP_PORT:-3000}:3000"
+            - "${APP_PORT:-4210}:4210"
         volumes:
             - ./:/app
             - /app/node_modules
         restart: "unless-stopped"
-        networks:
-            - backend
-
-networks:
-    backend:
-        driver: bridge
+        environment:
+            - APP_NAME=axp-cpaas-sms-connector
+            - APP_BASE_ROUTE=/v0/api
+            - APP_BASE_URL=http://localhost
+            - PORT=4210
+            - AXP_BASE_URL=https://na.cc.avayacloud.com
+            - AXP_ACCOUNT_ID=ABCDEF
+            - AXP_CLIENT_ID=CLIENT_ID
+            - AXP_CLIENT_SECRET=CLIENT_SECRET
+            - AXP_DIGITAL_API_VERSION=v1beta
+            - AXP_INTEGRATION_ID=INTEGRATION_ID
+            - AXP_PROVIDER_ID=PROVIDER_ID
+            - CPAAS_BASE_URL=https://api-us.cpaas.avayacloud.com/v2
+            - CPAAS_ACCOUNT_SID=CPAAS_SID
+            - CPAAS_AUTH_TOKEN=CPAAS_TOKEN
+            - LOG_LEVEL=info
+            - LOG_TO_CONSOLE=true
+            - LOG_OUTGOING_REQUESTS=true

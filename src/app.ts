@@ -10,7 +10,6 @@ import { CPaaSCallbackController } from './controllers/cpaas-callback-controller
 import express from 'express';
 import bodyParser from 'body-parser';
 const appConfig = config.appConfig;
-console.log(appConfig);
 
 export class App {
   private app: express.Application = express();

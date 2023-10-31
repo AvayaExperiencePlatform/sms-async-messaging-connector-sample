@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+    server:
+        build:
+            context: ./
+            target: development-build
+        ports:
+            - "${APP_PORT:-4210}:4210"
+        volumes:
+            - ./:/app
+            - /app/node_modules
+        restart: "unless-stopped"
+        env_file:
+            - .env
+        networks:
+            - backend
+
+networks:
+    backend:
+        driver: bridge

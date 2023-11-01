@@ -27,7 +27,8 @@ Current supported providers are:
     - By default that endpoint will be defined as `{{APP_BASE_URL}}/{{APP_BASE_ROUTE}}/cpaas/numbers/:inboundSMSNumber/callback`
     - For example, `https://my.server.com/v1/api/cpaas/numbers/123456789/callback`
 
-
+## Diagram
+![Flow Diagram](./static/images/flow-diagram.png)
 
 ## Technical Guide
 

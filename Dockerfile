@@ -8,6 +8,7 @@ RUN apk upgrade --available
 COPY . .
 ENV NODE_ENV=production
 RUN npm install --force
+RUN npm install -g typescript
 
 FROM scratch as production-build
 WORKDIR /app

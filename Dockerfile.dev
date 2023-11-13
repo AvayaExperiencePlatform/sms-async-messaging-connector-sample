@@ -6,10 +6,11 @@ COPY . ./app
 WORKDIR /app
 
 RUN npm install
+RUN npm install -g typescript
 
 EXPOSE 4210
 
-Dvelopment build stage
+#Dvelopment build stage
 FROM common-build-stage as development-build
 
 ENV NODE_ENV development

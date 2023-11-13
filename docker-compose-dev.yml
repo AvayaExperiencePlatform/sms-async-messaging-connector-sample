@@ -5,6 +5,7 @@ services:
         build:
             context: ./
             target: development-build
+            dockerfile: ./Dockerfile.dev
         ports:
             - "${APP_PORT:-4210}:4210"
         volumes:

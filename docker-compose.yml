@@ -6,11 +6,9 @@ services:
         build:
             context: ./
             target: production-build
+            dockerfile: ./Dockerfile
         ports:
             - "${APP_PORT:-4210}:4210"
-        volumes:
-            - ./:/app
-            - /app/node_modules
         restart: "unless-stopped"
         environment:
             - APP_NAME=axp-cpaas-sms-connector

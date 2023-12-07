@@ -1,4 +1,4 @@
-import { Post, HttpCode, Controller, Body, Param } from 'routing-controllers';
+import { Post, HttpCode, Controller, Body, Param, InternalServerError } from 'routing-controllers';
 import { BaseController } from '../infrastructure/abstracts/base-controller';
 import { Inject, Service } from 'typedi';
 import AXPConnector from '../infrastructure/services/axp/axp-connector';
@@ -30,6 +30,7 @@ export class AXPCallbackController extends BaseController {
       } else return { success: false, message: 'Unknown connector type!' };
     } catch (error) {
       this.logger.error(`Error occured in AXP Callback Handler - `, error);
+      throw new InternalServerError('Error occurred in callback handler');
     }
   }
 

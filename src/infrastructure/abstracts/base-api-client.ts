@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import * as AxiosLogger from 'axios-logger';
-import { Configuration } from '../types/types';
+import { Configuration, InitAPIClientParams } from '../types/types';
 
 export default class BaseAPIClient {
   protected configuration: Configuration;
@@ -18,10 +18,10 @@ export default class BaseAPIClient {
     });
   }
 
-  public async initClient(setAuthorization: Function, retryErrorCode?: number): Promise<void> {
+  public async initClient({ setAuthorization, acquireToken, retryErrorCode }: InitAPIClientParams): Promise<void> {
     if (process.env.LOG_OUTGOING_REQUESTS == 'true') this.apiClient.interceptors.request.use(AxiosLogger.requestLogger as any, AxiosLogger.errorLogger);
-    if (retryErrorCode != undefined) this.setInterceptors(setAuthorization, retryErrorCode);
-    await setAuthorization();
+    if (retryErrorCode != undefined && acquireToken != undefined) this.setInterceptors(acquireToken, retryErrorCode);
+    if (setAuthorization != undefined) await setAuthorization();
     this.isInitialized = true;
   }
 
@@ -29,19 +29,25 @@ export default class BaseAPIClient {
     return this.isInitialized;
   }
 
-  protected async setInterceptors(setAuthorization: Function, retryErrorCode: number): Promise<void> {
+  protected async setInterceptors(acquireToken: Function, retryErrorCode: number): Promise<void> {
     this.apiClient.interceptors.response.use(
       (response: any) => {
         AxiosLogger.responseLogger(response);
         return response;
       },
       async function (error: any) {
-        console.warn('Error received for request...');
+        console.error('error: Error received for request...');
         const originalRequest = error.config;
         if (error.response.status === retryErrorCode && !originalRequest._retry) {
+          console.warn('warn: Status code 401 received, retrying..');
           originalRequest._retry = true;
-          await setAuthorization();
-          console.warn('Status code 401 received, retrying..');
+          const { access_token } = await acquireToken();
+          const headers = {
+            Authorization: `Bearer ${access_token}`,
+            'Content-Type': `application/json`,
+          } as any;
+          this.apiClient.defaults.headers = headers;
+          originalRequest.headers = headers;
           return this.apiClient(originalRequest);
         }
         return Promise.reject(error);

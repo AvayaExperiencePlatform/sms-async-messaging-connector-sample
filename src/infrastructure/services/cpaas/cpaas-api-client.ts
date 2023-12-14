@@ -4,7 +4,7 @@ import { CPaaSSendMessage, Configuration } from '../../types/types';
 export default class CPaaSAPIClient extends BaseAPIClient {
   constructor(configuration: Configuration) {
     super(configuration);
-    this.initClient(this.setToken.bind(this), undefined);
+    this.initClient({ setAuthorization: this.setToken.bind(this) });
   }
 
   public async setToken() {

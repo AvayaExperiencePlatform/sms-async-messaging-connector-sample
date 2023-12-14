@@ -11,11 +11,11 @@ export default class AXPAPIClient extends BaseAPIClient {
   constructor(configuration: Configuration) {
     super(configuration);
     this.logger = BaseLogger.child({ meta: { service: 'axp-api-client' } });
-    this.initClient(this.acquireToken.bind(this), 401);
+    this.initClient({ acquireToken: this.acquireToken.bind(this), retryErrorCode: 401 });
     this.logger.info(`Initialized AXPAPIClient with config`, this.configuration);
   }
 
-  private async acquireToken() {
+  private async acquireToken(): Promise<{ access_token: string }> {
     const appTokenQueryParams = new URLSearchParams();
     appTokenQueryParams.append('grant_type', 'client_credentials');
     appTokenQueryParams.append('client_id', this.configuration.clientId);
@@ -26,15 +26,11 @@ export default class AXPAPIClient extends BaseAPIClient {
       Connection: 'keep-alive',
     };
 
+    this.logger.info('Attempting to acquire new access token...')
     const response = await this.authClient.post(`/auth/realms/${this.configuration.accountId}/protocol/openid-connect/token`, appTokenQueryParams, { headers });
-    this.apiClient.defaults.headers = {
-      Authorization: `Bearer ${response.data.access_token}`,
-      'Content-Type': `application/json`,
-    } as any;
-  }
-
-  public async forceInit() {
-    await this.acquireToken();
+    this.logger.info('Success! New access token has been acquired...')
+    
+    return response.data;
   }
 
   public async sendMessage(message: AXPSendMessage) {

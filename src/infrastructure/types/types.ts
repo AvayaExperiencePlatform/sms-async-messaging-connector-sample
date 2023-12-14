@@ -118,3 +118,9 @@ export type CPaaSSendMessage = {
   To: string;
   Body: string;
 };
+
+export type InitAPIClientParams = {
+  setAuthorization?: Function;
+  acquireToken?: Function;
+  retryErrorCode?: number;
+};

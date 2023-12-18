@@ -1,5 +1,14 @@
 # Avaya Experience Platform - SMS Connector
 
+---
+
+## :warning: **Disclaimer**
+
+> :bulb: This sample application is provided **for demonstration purposes only** and is not intended for production use. *Your Company Name* assumes no responsibility for any issues arising from its use.
+
+---
+
+
 ## Description
 
 This is a sample SMS connector, bringing SMS channel into Avaya Experience Platform (AXP) using the Digital Custom Messaging Capabilities and Async APIs provided by AXP.
@@ -11,7 +20,6 @@ On the SMS provider side, this service currently supports the following SMS prov
 - **Avaya Communications API**
   - Utilizing the SMS functionalities provided Avaya Comms APIs.
 - More to come soon
-
 
 
 It provides currently 2 main functionalities, being

@@ -1,6 +1,6 @@
 # Avaya Experience Platform - SMS Connector
 
----
+This is a sample SMS connector, bringing SMS channel into Avaya Experience Platform (AXP) using the Digital Custom Messaging Capabilities and Async APIs provided by AXP.
 
 ## :warning: **Disclaimer**
 
@@ -8,10 +8,7 @@
 
 ---
 
-
 ## Description
-
-This is a sample SMS connector, bringing SMS channel into Avaya Experience Platform (AXP) using the Digital Custom Messaging Capabilities and Async APIs provided by AXP.
 
 It utilizes the Avaya Experience Platform Custom Messaging Digital APIs & Digital Notification APIs to send and receive messages into/from AXP.
 

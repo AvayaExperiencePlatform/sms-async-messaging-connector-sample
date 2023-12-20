@@ -1,7 +1,7 @@
 {
   "name": "sample-sms-async-connector",
   "version": "1.0.0",
-  "description": "",
+  "description": "SMS - AXP Messaging Connector",
   "main": "server.js",
   "scripts": {
     "dev": "NODE_ENV=development ./node_modules/.bin/nodemon --exec './node_modules/.bin/ts-node' src/server.ts",
@@ -12,7 +12,7 @@
     "code:format:specific-file": "prettier --write ",
     "test": "jest"
   },
-  "author": "Avaya",
+  "author": "Avaya, LLC.",
   "license": "MIT",
   "dependencies": {
     "axios": "^1.5.1",

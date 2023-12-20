@@ -6,3 +6,5 @@ src/schema.gql
 .vscode
 .idea
 logs/
+package-lock.json
+yarn.lock

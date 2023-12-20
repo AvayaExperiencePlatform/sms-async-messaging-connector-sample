@@ -27,7 +27,7 @@ The connector leverages Avaya Experience Platform's Custom Messaging Digital API
    - Example: `https://my.server.com/v1/api/cpaas/numbers/123456789/callback`
 
 ## Flow Diagram
-![Flow Diagram](./static/images/flow-diagram.png)
+![Flow Diagram](./static/images/diagram.svg)
 
 ## Technical Guide
 

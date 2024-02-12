@@ -23,13 +23,13 @@ export default class AXPAPIClient extends BaseAPIClient {
 
     const headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Connection': 'keep-alive',
-      'appkey': this.configuration.apiAppKey
+      Connection: 'keep-alive',
+      appkey: this.configuration.apiAppKey,
     };
 
-    this.logger.info('Attempting to acquire new access token...')
+    this.logger.info('Attempting to acquire new access token...');
     const response = await this.authClient.post(`/api/auth/v1/${this.configuration.accountId}/protocol/openid-connect/token`, appTokenQueryParams, { headers });
-    this.logger.info('Success! New access token has been acquired...')
+    this.logger.info('Success! New access token has been acquired...');
 
     return response.data;
   }

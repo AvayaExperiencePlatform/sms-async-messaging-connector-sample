@@ -8,6 +8,7 @@ export let config = {
   },
   axpConfig: {
     baseURL: process.env.AXP_BASE_URL,
+    apiAppKey: process.env.AXP_API_APP_KEY,
     accountId: process.env.AXP_ACCOUNT_ID,
     clientId: process.env.AXP_CLIENT_ID,
     clientSecret: process.env.AXP_CLIENT_SECRET,

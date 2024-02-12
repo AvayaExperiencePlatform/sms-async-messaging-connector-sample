@@ -18,10 +18,10 @@ export default class CPaaSConnector implements AbstractConnector {
   }
 
   public async sendMessage(message: NormalizedMessage): Promise<NormalizedMessage> {
-    this.logger.info(`Sending normalized message to CPaaS: `, message);
+    this.logger.info(`Sending normalized message to CPaaS: `, { message });
 
     const cpaasMessage = transformToCPaaSMessage(message);
-    this.logger.info(`Transformed normalized message to CPaaS Fromat: `, cpaasMessage);
+    this.logger.info(`Transformed normalized message to CPaaS Fromat: `, { cpaasMessage });
 
     const sentMessage = await this.apiClient.sendMessage(cpaasMessage);
     this.logger.info(`Send Message request sent to CPaaS and response data received: `, sentMessage.data);
@@ -31,7 +31,7 @@ export default class CPaaSConnector implements AbstractConnector {
 
   public async messageCallbackHandler(incomingMessage: IncomingMessage, callback: Function): Promise<void> {
     const normalizedMessage = normalizeCPaaSMessage(incomingMessage);
-    this.logger.info(`Normalized incoming CPaaS message to: `, normalizedMessage);
+    this.logger.info(`Normalized incoming CPaaS message to: `, { normalizedMessage });
 
     return callback(normalizedMessage);
   }

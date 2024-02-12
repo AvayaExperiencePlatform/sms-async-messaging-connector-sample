@@ -19,9 +19,9 @@ export default class AXPConnector implements AbstractConnector {
   }
 
   public async sendMessage(message: NormalizedMessage): Promise<NormalizedMessage> {
-    this.logger.info(`Sending normalized message to AXP: `, message);
+    this.logger.info(`Sending normalized message to AXP: `, { message });
     const axpMessage = transformToAXPMessage(message);
-    this.logger.info(`Transformed normalized message to AXP Fromat: `, axpMessage);
+    this.logger.info(`Transformed normalized message to AXP Fromat: `, { axpMessage });
     const sentMessage = await this.apiClient.sendMessage(axpMessage);
     this.logger.info(`Request sent to AXP and response data received: `, sentMessage.data);
     return message;
@@ -39,7 +39,7 @@ export default class AXPConnector implements AbstractConnector {
     }
 
     const normalizedMessage = normalizeAXPMessage(incomingMessage);
-    this.logger.info(`Normalized incoming AXP message to: `, normalizedMessage);
+    this.logger.info(`Normalized incoming AXP message to: `, { normalizedMessage });
     return await callback(normalizedMessage);
   }
 

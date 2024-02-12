@@ -16,6 +16,7 @@ services:
             - APP_BASE_URL=http://localhost
             - PORT=4210
             - AXP_BASE_URL=https://na.cc.avayacloud.com
+            - AXP_API_APP_KEY=AXP_API_APP_KEY
             - AXP_ACCOUNT_ID=ABCDEF
             - AXP_CLIENT_ID=CLIENT_ID
             - AXP_CLIENT_SECRET=CLIENT_SECRET

@@ -21,6 +21,7 @@ export type NormalizedMessage = {
 
 export type AXPConfiguration = {
   baseURL: string;
+  apiAppKey: string;
   accountId: string;
   clientId: string;
   clientSecret: string;

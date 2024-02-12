@@ -43,6 +43,7 @@ export default class BaseAPIClient {
           originalRequest._retry = true;
           const { access_token } = await acquireToken();
           const headers = {
+            ...this.apiClient.defaults.headers, 
             Authorization: `Bearer ${access_token}`,
             'Content-Type': `application/json`,
           } as any;

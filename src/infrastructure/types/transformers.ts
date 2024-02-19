@@ -4,10 +4,10 @@ export const normalizeAXPMessage = (message: IncomingMessage): NormalizedMessage
   return {
     message: {
       id: message.message.messageId,
-      senderId: message.message.providerDialogId.split('_')[1],
-      receiverId: message.message.providerDialogId.split('_')[0],
-      receieverName: message.message.senderParticipantName,
-      senderName: message.message.recipientParticipants[0]?.displayName,
+      senderId: message.message.headers.sourceAddress,
+      receiverId: message.message.recipientParticipants[0].providerParticipantId,
+      senderName: message.message.senderParticipantName,
+      receieverName: message.message.recipientParticipants[0]?.displayName,
       text: message.message.body.elementText.text,
       timestamp: message.message.receivedAt,
     },
@@ -47,9 +47,13 @@ export const transformToAXPMessage = (message: NormalizedMessage): AXPSendMessag
         textFormat: 'PLAINTEXT',
       },
     },
+    headers: {
+      sourceType: 'SMS',
+      sourceAddress: message.message.receiverId
+    },
     senderName: message.message.senderName,
     providerSenderId: message.message.senderId,
-    providerDialogId: `${message.message.senderId}_${message.message.receiverId}`,
+    providerDialogId: `SMS_${message.message.senderId}_${message.message.receiverId}`,
     providerMessageId: message.message.id,
     engagementParameters: { receipientId: message.message.receiverId },
   };

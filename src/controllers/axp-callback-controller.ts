@@ -29,7 +29,10 @@ export class AXPCallbackController extends BaseController {
         return { success: true, message: 'Message Processed to CPaaS' };
       } else return { success: false, message: 'Unknown connector type!' };
     } catch (error) {
-      this.logger.error(`Error occured in AXP Callback Handler - `, error);
+      this.logger.error(`Error occured in AXP Callback Handler - `, error?.message);
+      if (error?.response?.data) {
+        this.logger.error(`Error response recieved:`, { data: error.response.data })
+      }
       throw new InternalServerError('Error occurred in callback handler');
     }
   }

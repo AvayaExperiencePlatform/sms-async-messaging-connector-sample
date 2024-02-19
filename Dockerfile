@@ -17,7 +17,7 @@ COPY --from=base lib/ /lib/
 COPY --from=base usr/ /usr/
 COPY --from=base app/ /app/
 COPY --from=base bin/ /bin/
-EXPOSE 3030
+EXPOSE 4210
 
 ENV NODE_ENV production
 

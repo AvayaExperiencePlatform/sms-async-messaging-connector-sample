@@ -18,7 +18,7 @@ export default class CPaaSConnector implements AbstractConnector {
   }
 
   public async sendMessage(message: NormalizedMessage): Promise<NormalizedMessage> {
-    this.logger.info(`Sending normalized message to CPaaS: `, { message });
+    this.logger.info(`Sending normalized message to CPaaS: `, { normalizedMessage: message });
 
     const cpaasMessage = transformToCPaaSMessage(message);
     this.logger.info(`Transformed normalized message to CPaaS Fromat: `, { cpaasMessage });

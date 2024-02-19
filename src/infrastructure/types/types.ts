@@ -71,6 +71,10 @@ export type AXPIncomingMessage = {
     providerParticipantId: string;
     channelProviderId: string;
   }[];
+  headers?:{
+    sourceType: string;
+    sourceAddress: string;
+  };
   providerDialogId: string;
   providerSenderId: string;
   receivedAt: string;
@@ -105,6 +109,10 @@ export type AXPSendMessage = {
       text: string;
       textFormat: 'PLAINTEXT';
     };
+  };
+  headers?:{
+    sourceType: string;
+    sourceAddress: string;
   };
   senderName: string;
   providerSenderId: string;

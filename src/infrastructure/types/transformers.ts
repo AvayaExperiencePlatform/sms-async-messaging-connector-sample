@@ -53,7 +53,7 @@ export const transformToAXPMessage = (message: NormalizedMessage): AXPSendMessag
     },
     senderName: message.message.senderName,
     providerSenderId: message.message.senderId,
-    providerDialogId: `SMS_${message.message.senderId}_${message.message.receiverId}`,
+    providerDialogId: `${message.message.senderId}_${message.message.receiverId}_SMS`,
     providerMessageId: message.message.id,
     engagementParameters: { receipientId: message.message.receiverId },
   };
